@@ -1,7 +1,3 @@
-# This is a Python conversion of your Go server
-# It uses Flask for HTTP endpoints and Tkinter for a simple GUI
-# Requirements: flask, cryptography
-
 import base64
 import json
 import os
@@ -15,8 +11,6 @@ from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 import tkinter as tk
 from tkinter.scrolledtext import ScrolledText
 
-# ------------------ Crypto Setup ------------------
-
 private_key = rsa.generate_private_key(
     public_exponent=65537,
     key_size=2048
@@ -24,8 +18,6 @@ private_key = rsa.generate_private_key(
 public_key = private_key.public_key()
 
 sessions = {}
-
-# ------------------ Flask Server ------------------
 
 app = Flask(__name__)
 
@@ -88,8 +80,6 @@ def message_endpoint():
     except Exception as e:
         return jsonify({"validHMAC": True, "message": str(e)})
 
-# ------------------ GUI ------------------
-
 root = tk.Tk()
 root.title("Secure Server Monitor")
 root.geometry("600x400")
@@ -101,8 +91,6 @@ log_box.pack(expand=True, fill='both')
 def log(msg):
     log_box.insert(tk.END, msg + "\n")
     log_box.see(tk.END)
-
-# ------------------ Threading ------------------
 
 def run_server():
     app.run(port=8080, debug=False, use_reloader=False)
